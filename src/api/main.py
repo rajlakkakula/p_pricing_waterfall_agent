@@ -33,7 +33,11 @@ _ROOT = Path(__file__).resolve().parent.parent.parent
 class AppSettings(BaseSettings):
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
-    cors_origins: str = "http://localhost:3000,http://localhost:5173"
+    cors_origins: str = (
+        "http://localhost:3000,"
+        "http://localhost:5173,"
+        "https://rajlakkakula.github.io"
+    )
     app_env: str = "development"
 
 
