@@ -4,7 +4,7 @@
  * In production (GitHub Pages), set VITE_API_BASE_URL to the hosted backend URL.
  */
 
-const BASE = import.meta.env.VITE_API_BASE_URL ?? "/api";
+const BASE = import.meta.env.VITE_API_BASE_URL || "/api";
 
 async function _get(path, params = {}) {
   const qs = new URLSearchParams(
