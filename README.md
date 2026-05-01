@@ -2,6 +2,8 @@
 
 AI-powered pricing analytics for the filtration industry. Decomposes the full price journey — Blue/Jobber Price → Deductions → Invoice Price → Bonuses → Pocket Price → Standard Cost → Contribution Margin — with natural language diagnostics via Claude AI.
 
+**Live demo:** https://rajlakkakula.github.io/p_pricing_waterfall_agent/
+
 ---
 
 ## Build Status
