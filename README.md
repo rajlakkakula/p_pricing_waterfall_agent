@@ -25,6 +25,8 @@ AI-powered pricing analytics for the filtration industry. Decomposes the full pr
 | Python | FastAPI app + routes | Done |
 | Python | Unit + API tests (116 tests) | Done |
 | Frontend | React + Vite + Recharts + Tailwind | Done |
+| CI/CD | GitHub Actions → GitHub Pages deploy | Done |
+| Hosting | Render (FastAPI backend, free tier) | Done |
 
 ---
 
@@ -152,6 +154,49 @@ Completed successfully — PASS=5 WARN=0 ERROR=0
 ```
 
 > **Re-running dbt:** Models are idempotent — re-run `uv run dbt run` at any time to refresh the Gold tables after loading new data.
+
+---
+
+## Deployment (GitHub Pages + Render)
+
+The frontend is hosted on GitHub Pages and the FastAPI backend on Render's free tier.
+
+### Frontend — GitHub Pages
+
+Deployments are fully automated via GitHub Actions. Every push to `master` triggers `.github/workflows/deploy-frontend.yml`, which builds the Vite app and publishes it to GitHub Pages.
+
+**One-time setup (already done):**
+1. Repo → **Settings → Pages → Source → GitHub Actions**
+2. Repo → **Settings → Environments → `github-pages` → Deployment branches** → allow `master`
+
+**Required GitHub secret:**
+
+| Secret | Value |
+|--------|-------|
+| `VITE_API_BASE_URL` | `https://<your-render-app>.onrender.com/api` |
+
+Set it at: repo → **Settings → Secrets and variables → Actions → Repository secrets**.
+
+The secret is baked into the JS bundle at build time. After changing it, push any commit to trigger a rebuild.
+
+---
+
+### Backend — Render
+
+**Setup:**
+1. [render.com](https://render.com) → **New → Web Service** → connect this repo
+2. Configure the service:
+
+| Field | Value |
+|-------|-------|
+| Build Command | `pip install -e .` |
+| Start Command | `uvicorn src.api.main:app --host 0.0.0.0 --port $PORT` |
+
+3. Add all variables from `.env.example` as Render environment variables (Snowflake credentials, `ANTHROPIC_API_KEY`, etc.)
+
+**CORS:** The backend allows `https://rajlakkakula.github.io` by default — no extra configuration needed. If you fork this repo and deploy under a different GitHub username, add your GitHub Pages origin to `cors_origins` in [src/api/main.py](src/api/main.py).
+
+**Free tier note:** Render's free tier spins down after 15 minutes of inactivity. The first request after a cold start may take 30–60 seconds.
 
 ---
 
@@ -382,7 +427,7 @@ npm install --cache /tmp/npm-cache
 
 ```
 p_pricing_waterfall_agent/
-├── READ.md                          # This file
+├── README.md                        # This file
 ├── CLAUDE.md                        # AI assistant context (domain glossary, build log)
 ├── pyproject.toml                   # Python dependencies (uv / hatchling)
 ├── .env                             # Credentials (gitignored)
