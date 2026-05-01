@@ -1,0 +1,26 @@
+version: 2
+
+sources:
+  - name: bronze
+    database: PRICING_DB
+    schema: BRONZE
+    tables:
+      - name: raw_transactions
+        description: Raw ERP transaction data loaded from CSV. Append-only.
+        columns:
+          - name: country
+          - name: year
+          - name: material
+          - name: sales_designation
+          - name: sold_to
+          - name: corporate_group
+          - name: sales_qty
+          - name: blue_jobber_price
+          - name: deductions
+          - name: invoice_price
+          - name: bonuses
+          - name: pocket_price
+          - name: pso
+          - name: standard_cost
+          - name: material_cost
+          - name: _loaded_at

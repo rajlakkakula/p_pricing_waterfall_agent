@@ -1,0 +1,66 @@
+version: 2
+
+models:
+  - name: waterfall_fact
+    description: >
+      Pre-computed waterfall metrics for every transaction.
+      Partitioned by year and clustered on country and pso.
+      Primary analytics table consumed by the AI agent and Power BI.
+    columns:
+      - name: country
+        description: Market geography
+        tests:
+          - not_null
+      - name: year
+        description: Transaction year
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: [2023, 2024, 2025, 2026]
+      - name: material
+        tests:
+          - not_null
+      - name: sold_to
+        tests:
+          - not_null
+      - name: pso
+        tests:
+          - not_null
+      - name: sales_qty
+        tests:
+          - not_null
+      - name: margin_pct
+        description: Contribution margin as % of pocket price
+        tests:
+          - not_null
+      - name: realization_pct
+        description: Pocket price as % of blue price. Should be between 0 and 120.
+        tests:
+          - not_null
+
+  - name: customer_profitability
+    description: >
+      Aggregated customer-level profitability with margin tier classification.
+      Refreshed daily. Used for customer ranking and outlier identification.
+    columns:
+      - name: sold_to
+        tests:
+          - not_null
+      - name: margin_tier
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values:
+                  - "Tier 1 - Premium"
+                  - "Tier 2 - Healthy"
+                  - "Tier 3 - Acceptable"
+                  - "Tier 4 - Low"
+                  - "Tier 5 - Destructive"
+      - name: wavg_margin_pct
+        tests:
+          - not_null
+      - name: total_qty
+        tests:
+          - not_null
