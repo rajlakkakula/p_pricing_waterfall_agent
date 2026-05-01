@@ -1,0 +1,44 @@
+[project]
+name = "waterfall-agent"
+version = "0.1.0"
+description = "Price-to-Margin Waterfall Intelligence Agent for Filtration Industry"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi>=0.115.0",
+    "uvicorn[standard]>=0.34.0",
+    "snowflake-connector-python[pandas]>=3.12.0",
+    "anthropic>=0.42.0",
+    "pydantic>=2.10.0",
+    "pydantic-settings>=2.6.0",
+    "pandas>=2.2.0",
+    "numpy>=2.1.0",
+    "scipy>=1.14.0",
+    "redis>=5.2.0",
+    "python-dotenv>=1.0.0",
+    "duckdb>=1.1.0",
+    "dbt-snowflake>=1.11.4",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.3.0",
+    "pytest-asyncio>=0.24.0",
+    "pytest-cov>=6.0.0",
+    "httpx>=0.28.0",
+    "ruff>=0.8.0",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src"]

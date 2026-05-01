@@ -1,0 +1,48 @@
+# ── Secrets & environment ──────────────────────────────────────────────────────
+.env
+.env.local
+.env.*.local
+.env.production
+.env.staging
+
+# ── Python ─────────────────────────────────────────────────────────────────────
+.venv/
+venv/
+env/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# ── Tool caches ────────────────────────────────────────────────────────────────
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# ── dbt ───────────────────────────────────────────────────────────────────────
+# Source models (dbt/models/, dbt/macros/, dbt/dbt_project.yml, dbt/profiles.yml)
+# are committed. Only generated/runtime artifacts are excluded.
+dbt/logs/
+dbt/target/
+dbt/.user.yml
+
+# ── Frontend ───────────────────────────────────────────────────────────────────
+frontend/node_modules/
+frontend/dist/
+frontend/.env
+frontend/.env.local
+
+# ── IDE & OS ───────────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+*.code-workspace
+.vscode/settings.json
+.idea/
+
+# ── Misc ───────────────────────────────────────────────────────────────────────
+agent.qmd
+*.log
