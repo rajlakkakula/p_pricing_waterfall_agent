@@ -4,7 +4,7 @@
 .env.*.local
 .env.production
 .env.staging
-
+generate_report.py
 # ── Python ─────────────────────────────────────────────────────────────────────
 .venv/
 venv/
